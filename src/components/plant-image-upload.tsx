@@ -142,30 +142,28 @@ export default function PlantImageUpload({
           />
           <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
             <h3 className="text-3xl font-bold text-white mb-4 text-center px-4">{overlayText}</h3>
-            <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center space-y-2">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="text-xs bg-white hover:bg-green-50"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  triggerFileInput(e);
-                }}
-              >
-                {uploading ? (
-                  <>
-                    <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                    Uploading...
-                  </>
-                ) : (
-                  <>
-                    <Upload className="h-3 w-3 mr-1" />
-                    Upload Photo
-                  </>
-                )}
-              </Button>
-            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="text-xs bg-transparent text-white border-white hover:bg-white/20 hover:text-white"
+              onClick={(e) => {
+                e.stopPropagation();
+                triggerFileInput(e);
+              }}
+            >
+              {uploading ? (
+                <>
+                  <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Upload className="h-3 w-3 mr-1" />
+                  Upload Photo
+                </>
+              )}
+            </Button>
           </div>
         </>
       ) : (

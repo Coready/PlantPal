@@ -195,23 +195,25 @@ export default function AddPlantPage() {
                             </Select>
                           </div>
 
-                          <div>
-                            <Label htmlFor="acquired_date" className="flex items-center gap-2 text-base font-medium text-green-800">
-                              <Calendar className="h-4 w-4 text-green-600" />
+                          <div className="relative">
+                            <Label htmlFor="acquired_date" className="text-base font-medium text-green-800">
                               Acquired Date
                             </Label>
-                            <Input
-                              id="acquired_date"
-                              value={acquiredDate}
-                              onChange={(e) => setAcquiredDate(e.target.value)}
-                              type="date"
-                              className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500"
-                            />
+                            <div className="relative">
+                              <Input
+                                id="acquired_date"
+                                value={acquiredDate}
+                                onChange={(e) => setAcquiredDate(e.target.value)}
+                                type="date"
+                                className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500 pr-10"
+                              />
+                              <Calendar className="h-4 w-4 absolute right-3 top-1/2 transform -translate-y-1/2 text-green-600 pointer-events-none" />
+                            </div>
                           </div>
                         </div>
                         
-                        {/* Action Buttons - at the bottom of the right column */}
-                        <div className="flex justify-end gap-3 mt-4 mb-1">
+                        {/* Action Buttons - centered at the bottom */}
+                        <div className="flex justify-center gap-3 mt-4 mb-1">
                           <Button 
                             type="button" 
                             variant="outline"
