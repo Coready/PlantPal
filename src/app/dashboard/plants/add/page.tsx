@@ -210,7 +210,7 @@ export default function AddPlantPage() {
                     </div>
                     
                     {/* Action Buttons - Right aligned at the bottom */}
-                    <div className="flex justify-end gap-3 pb-1">
+                    <div className="flex justify-end gap-3 pb-1 mt-8">
                       <Button 
                         type="button" 
                         variant="outline"
