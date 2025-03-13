@@ -97,9 +97,14 @@ export default async function Dashboard() {
                 <Search size={16} />
                 Search Plants
               </Button>
-              <Button className="bg-green-600 hover:bg-green-700 flex items-center gap-2">
-                <Plus size={16} />
-                Add New Plant
+              <Button 
+                className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
+                asChild
+              >
+                <Link href="/dashboard/plants/add">
+                  <Plus size={16} />
+                  Add New Plant
+                </Link>
               </Button>
             </div>
           </header>
@@ -154,7 +159,7 @@ export default async function Dashboard() {
               ))}
 
               {/* Add Plant Card */}
-              <div className="bg-white rounded-xl overflow-hidden border border-dashed border-gray-300 flex flex-col items-center justify-center h-[320px] hover:bg-gray-50 transition-colors cursor-pointer">
+              <Link href="/dashboard/plants/add" className="bg-white rounded-xl overflow-hidden border border-dashed border-gray-300 flex flex-col items-center justify-center h-[320px] hover:bg-gray-50 transition-colors cursor-pointer">
                 <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mb-4">
                   <Plus size={24} className="text-green-600" />
                 </div>
@@ -162,7 +167,7 @@ export default async function Dashboard() {
                 <p className="text-sm text-gray-500 mt-1">
                   Track growth and care
                 </p>
-              </div>
+              </Link>
             </div>
           </section>
 
