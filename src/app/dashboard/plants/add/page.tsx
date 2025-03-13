@@ -123,47 +123,49 @@ export default function AddPlantPage() {
                   {/* Left column - Image Upload (3/5 width) */}
                   <div className="md:col-span-3 flex flex-col items-center">
                     <p className="text-lg text-gray-600 mb-4 text-center">Upload pictures of your plant to identify</p>
-                    {userId && (
-                      <PlantImageWrapper
-                        userId={userId}
-                        onImageChange={handleImageChange}
-                        initialImageUrl={imageUrl}
-                      />
-                    )}
+                    <div className="w-full">
+                      {userId && (
+                        <PlantImageWrapper
+                          userId={userId}
+                          onImageChange={handleImageChange}
+                          initialImageUrl={imageUrl}
+                        />
+                      )}
+                    </div>
                   </div>
 
-                  {/* Right column - Form fields (2/5 width) with flex to distribute space */}
-                  <div className="md:col-span-2 flex flex-col h-full">
-                    <div className="flex-grow space-y-4">
-                      <div className="space-y-2">
+                  {/* Right column - Form fields (2/5 width) with exact height matching */}
+                  <div className="md:col-span-2 flex flex-col justify-between h-[28rem]">
+                    <div className="space-y-3">
+                      <div>
                         <Label htmlFor="name" className="text-xl">Plant Name</Label>
                         <Input
                           id="name"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           placeholder="e.g. My Monstera"
-                          className="h-12 text-lg"
+                          className="h-11 text-lg mt-1"
                         />
                       </div>
 
-                      <div className="space-y-2">
+                      <div>
                         <Label htmlFor="location" className="text-xl">Room</Label>
                         <Input
                           id="location"
                           value={location}
                           onChange={(e) => setLocation(e.target.value)}
                           placeholder="e.g. Living Room"
-                          className="h-12 text-lg"
+                          className="h-11 text-lg mt-1"
                         />
                       </div>
 
-                      <div className="space-y-2">
+                      <div>
                         <Label htmlFor="light-direction" className="flex items-center gap-2 text-xl">
                           <Compass className="h-5 w-5" />
                           Light Direction
                         </Label>
                         <Select value={lightDirection} onValueChange={setLightDirection}>
-                          <SelectTrigger className="h-12 text-lg">
+                          <SelectTrigger className="h-11 text-lg mt-1">
                             <SelectValue placeholder="Select direction" />
                           </SelectTrigger>
                           <SelectContent>
@@ -175,13 +177,13 @@ export default function AddPlantPage() {
                         </Select>
                       </div>
 
-                      <div className="space-y-2">
+                      <div>
                         <Label htmlFor="light-brightness" className="flex items-center gap-2 text-xl">
                           <Sun className="h-5 w-5" />
                           Light Brightness
                         </Label>
                         <Select value={lightBrightness} onValueChange={setLightBrightness}>
-                          <SelectTrigger className="h-12 text-lg">
+                          <SelectTrigger className="h-11 text-lg mt-1">
                             <SelectValue placeholder="Select brightness" />
                           </SelectTrigger>
                           <SelectContent>
@@ -192,7 +194,7 @@ export default function AddPlantPage() {
                         </Select>
                       </div>
 
-                      <div className="space-y-2">
+                      <div>
                         <Label htmlFor="acquired_date" className="flex items-center gap-2 text-xl">
                           <Calendar className="h-5 w-5" />
                           Acquired Date
@@ -202,31 +204,31 @@ export default function AddPlantPage() {
                           value={acquiredDate}
                           onChange={(e) => setAcquiredDate(e.target.value)}
                           type="date"
-                          className="h-12 text-lg"
+                          className="h-11 text-lg mt-1"
                         />
                       </div>
                     </div>
                     
                     {/* Action Buttons - Right aligned at the bottom */}
-                    <div className="flex justify-end gap-4 mt-4">
+                    <div className="flex justify-end gap-4">
                       <Button 
                         type="button" 
                         variant="outline"
                         onClick={() => router.push("/dashboard/plants")}
-                        className="min-w-40 h-14 text-xl"
+                        className="min-w-36 h-12 text-lg"
                       >
                         Cancel
                       </Button>
                       <Button
                         type="submit"
-                        className="bg-green-600 hover:bg-green-700 min-w-40 h-14 text-xl"
+                        className="bg-green-600 hover:bg-green-700 min-w-36 h-12 text-lg"
                         disabled={loading}
                       >
                         {loading ? (
                           "Adding..."
                         ) : (
                           <>
-                            <Leaf className="w-6 h-6 mr-2" />
+                            <Leaf className="w-5 h-5 mr-2" />
                             Add Plant
                           </>
                         )}
