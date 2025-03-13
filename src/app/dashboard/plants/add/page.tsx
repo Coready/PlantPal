@@ -6,10 +6,17 @@ import DashboardNavbar from "@/components/dashboard-navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Leaf, Calendar } from "lucide-react";
+import { Leaf, Calendar, Sun, Compass } from "lucide-react";
 import { createClient } from "../../../../../supabase/client";
 import PlantImageWrapper from "@/components/plant-image-wrapper";
 import { toast } from "@/components/ui/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function AddPlantPage() {
   const router = useRouter();
@@ -21,6 +28,8 @@ export default function AddPlantPage() {
   // Form state
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
+  const [lightDirection, setLightDirection] = useState("");
+  const [lightBrightness, setLightBrightness] = useState("");
   const [acquiredDate, setAcquiredDate] = useState(new Date().toISOString().split('T')[0]); // Today's date
 
   // Get user ID on component mount
@@ -68,6 +77,8 @@ export default function AddPlantPage() {
         .insert({
           name,
           location,
+          light_direction: lightDirection,
+          light_brightness: lightBrightness,
           acquired_date: acquiredDate,
           notes: "", // Empty notes
           image_url: imageUrl,
@@ -103,14 +114,15 @@ export default function AddPlantPage() {
       <DashboardNavbar />
       <main className="w-full bg-gray-50 min-h-screen">
         <div className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
-            <div className="p-8">
-              <h1 className="text-3xl font-bold mb-8 text-center">Add New Plant</h1>
+          <div className="max-w-5xl mx-auto bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <div className="p-10">
+              <h1 className="text-4xl font-bold mb-10 text-center">Add New Plant</h1>
 
               <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="grid md:grid-cols-5 gap-8">
+                <div className="grid md:grid-cols-5 gap-10">
                   {/* Left column - Image Upload (3/5 width) */}
-                  <div className="md:col-span-3 flex items-center justify-center">
+                  <div className="md:col-span-3 flex flex-col items-center">
+                    <p className="text-lg text-gray-600 mb-4 text-center">Upload pictures of your plant to identify</p>
                     {userId && (
                       <PlantImageWrapper
                         userId={userId}
@@ -121,31 +133,66 @@ export default function AddPlantPage() {
                   </div>
 
                   {/* Right column - Form fields (2/5 width) */}
-                  <div className="md:col-span-2 space-y-5">
-                    <div className="space-y-2">
-                      <Label htmlFor="name" className="text-lg">Plant Name *</Label>
+                  <div className="md:col-span-2 space-y-6">
+                    <div className="space-y-3">
+                      <Label htmlFor="name" className="text-xl">Plant Name</Label>
                       <Input
                         id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="e.g. My Monstera"
-                        className="h-10 text-base"
+                        className="h-12 text-lg"
                       />
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="location" className="text-lg">Location</Label>
+                    <div className="space-y-3">
+                      <Label htmlFor="location" className="text-xl">Room</Label>
                       <Input
                         id="location"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
                         placeholder="e.g. Living Room"
-                        className="h-10 text-base"
+                        className="h-12 text-lg"
                       />
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="acquired_date" className="flex items-center gap-1 text-lg">
+                    <div className="space-y-3">
+                      <Label htmlFor="light-direction" className="flex items-center gap-2 text-xl">
+                        <Compass className="h-5 w-5" />
+                        Light Direction
+                      </Label>
+                      <Select value={lightDirection} onValueChange={setLightDirection}>
+                        <SelectTrigger className="h-12 text-lg">
+                          <SelectValue placeholder="Select direction" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="north">North</SelectItem>
+                          <SelectItem value="east">East</SelectItem>
+                          <SelectItem value="south">South</SelectItem>
+                          <SelectItem value="west">West</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label htmlFor="light-brightness" className="flex items-center gap-2 text-xl">
+                        <Sun className="h-5 w-5" />
+                        Light Brightness
+                      </Label>
+                      <Select value={lightBrightness} onValueChange={setLightBrightness}>
+                        <SelectTrigger className="h-12 text-lg">
+                          <SelectValue placeholder="Select brightness" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="low">Low Light</SelectItem>
+                          <SelectItem value="medium">Medium Light</SelectItem>
+                          <SelectItem value="bright">Bright Light</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label htmlFor="acquired_date" className="flex items-center gap-2 text-xl">
                         <Calendar className="h-5 w-5" />
                         Acquired Date
                       </Label>
@@ -154,32 +201,32 @@ export default function AddPlantPage() {
                         value={acquiredDate}
                         onChange={(e) => setAcquiredDate(e.target.value)}
                         type="date"
-                        className="h-10 text-base"
+                        className="h-12 text-lg"
                       />
                     </div>
                   </div>
                 </div>
                 
-                {/* Action Buttons - Centered at the bottom */}
-                <div className="pt-6 flex justify-center gap-4 mt-8">
+                {/* Action Buttons - Right aligned at the bottom */}
+                <div className="pt-8 flex justify-end gap-4 mt-8">
                   <Button 
                     type="button" 
                     variant="outline"
                     onClick={() => router.push("/dashboard/plants")}
-                    className="w-32 h-12 text-lg"
+                    className="min-w-40 h-14 text-xl"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-green-600 hover:bg-green-700 w-32 h-12 text-lg"
+                    className="bg-green-600 hover:bg-green-700 min-w-40 h-14 text-xl"
                     disabled={loading}
                   >
                     {loading ? (
                       "Adding..."
                     ) : (
                       <>
-                        <Leaf className="w-5 h-5 mr-2" />
+                        <Leaf className="w-6 h-6 mr-2" />
                         Add Plant
                       </>
                     )}
