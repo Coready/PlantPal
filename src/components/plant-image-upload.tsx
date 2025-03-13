@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { createClient } from "../../supabase/client";
 import { Button } from "@/components/ui/button";
 import { Loader2, Upload, Camera, Image as ImageIcon } from "lucide-react";
@@ -22,17 +22,13 @@ export default function PlantImageUpload({
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(initialImageUrl || null);
   const [fileInputKey, setFileInputKey] = useState(uuidv4());
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Handle file upload
-  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = async (file: File) => {
     try {
       setUploading(true);
       
-      if (!event.target.files || event.target.files.length === 0) {
-        return;
-      }
-      
-      const file = event.target.files[0];
       const fileExt = file.name.split('.').pop();
       const filePath = `${userId}/plants/${uuidv4()}.${fileExt}`;
       
@@ -81,99 +77,90 @@ export default function PlantImageUpload({
 
   // Add a direct click handler for the button
   const triggerFileInput = (e: React.MouseEvent) => {
-    // Prevent any form submission
     e.preventDefault();
-    e.stopPropagation();
-    
-    // Find the file input element and click it
-    const fileInput = document.getElementById('plant-image-upload');
-    if (fileInput) {
-      fileInput.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      return;
+    }
+    
+    const file = e.target.files[0];
+    await handleUpload(file);
+  };
+
   return (
-    <div className="border-2 border-dashed border-gray-300 rounded-lg h-96 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 transition-colors relative overflow-hidden">
+    <div className="relative h-[28rem] w-full rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 flex flex-col items-center justify-center overflow-hidden">
       {imageUrl ? (
-        <div className="w-full h-full relative group">
-          <img 
-            src={imageUrl} 
-            alt="Plant" 
-            className="w-full h-full object-cover opacity-40"
-          />
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Upload Photo Here</h3>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="text-base bg-white px-6"
-              disabled={uploading}
-              onClick={triggerFileInput}
-              type="button" // Explicitly set type to button to prevent form submission
-            >
-              {uploading ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Uploading...
-                </>
-              ) : (
-                <>
-                  <Upload className="mr-2 h-5 w-5" />
-                  Upload
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
-      ) : (
         <>
-          <ImageIcon className="w-16 h-16 text-gray-400 mb-4" />
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">Upload Photo Here</h3>
-          <p className="text-base text-gray-400 mt-1 mb-4">Tap to browse or drag and drop</p>
-          <div className="flex gap-4">
-            <Button
-              type="button" // Explicitly set type to button
-              variant="outline"
-              size="lg"
-              className="cursor-pointer text-base px-6"
-              disabled={uploading}
-              onClick={triggerFileInput}
-            >
-              {uploading ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Uploading...
-                </>
-              ) : (
-                <>
-                  <Upload className="w-5 h-5 mr-2" />
-                  Upload
-                </>
-              )}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              className="text-base"
-              disabled={true}
-            >
-              <Camera className="w-5 h-5 mr-2" />
-              Take Photo
-            </Button>
+          <img
+            src={imageUrl}
+            alt="Plant preview"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center">
+            <div className="bg-white/90 rounded-lg p-3 flex flex-col items-center space-y-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="text-xs"
+                onClick={triggerFileInput}
+              >
+                {uploading ? (
+                  <>
+                    <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                    Uploading...
+                  </>
+                ) : (
+                  <>
+                    <Upload className="h-3 w-3 mr-1" />
+                    Change Photo
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </>
+      ) : (
+        <>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="sr-only"
+          />
+          <ImageIcon className="w-10 h-10 mb-3 text-gray-400" />
+          <p className="text-base font-medium mb-2 text-center px-6">Upload Photo Here</p>
+          <p className="text-xs text-gray-500 mb-4 text-center px-6">
+            Click the button below to upload a photo of your plant
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="text-xs"
+            onClick={triggerFileInput}
+            disabled={uploading}
+          >
+            {uploading ? (
+              <>
+                <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                Uploading...
+              </>
+            ) : (
+              <>
+                <Upload className="h-3 w-3 mr-1" />
+                Upload Photo
+              </>
+            )}
+          </Button>
+        </>
       )}
-      
-      <input
-        type="file"
-        id="plant-image-upload"
-        key={fileInputKey}
-        accept="image/*"
-        className="hidden"
-        onChange={handleUpload}
-        disabled={uploading}
-      />
     </div>
   );
 } 
