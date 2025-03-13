@@ -196,19 +196,21 @@ export default function AddPlantPage() {
                           </div>
 
                           <div>
-                            <Label htmlFor="acquired_date" className="flex items-center justify-between text-base font-medium text-green-800">
-                              <span className="flex items-center gap-2">
-                                <Calendar className="h-4 w-4 text-green-600" />
-                                Acquired Date
-                              </span>
+                            <Label htmlFor="acquired_date" className="text-base font-medium text-green-800">
+                              Acquired Date
                             </Label>
-                            <Input
-                              id="acquired_date"
-                              value={acquiredDate}
-                              onChange={(e) => setAcquiredDate(e.target.value)}
-                              type="date"
-                              className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500"
-                            />
+                            <div className="relative mt-1">
+                              <Input
+                                id="acquired_date"
+                                value={acquiredDate}
+                                onChange={(e) => setAcquiredDate(e.target.value)}
+                                type="date"
+                                className="h-9 text-sm border-green-200 focus:border-green-500 focus:ring-green-500 pr-10"
+                              />
+                              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <Calendar className="h-4 w-4 text-green-600" />
+                              </div>
+                            </div>
                           </div>
                         </div>
                         
