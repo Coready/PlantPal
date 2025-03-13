@@ -112,132 +112,140 @@ export default function AddPlantPage() {
   return (
     <>
       <DashboardNavbar />
-      <main className="w-full bg-gray-50 min-h-screen">
+      <main className="w-full bg-gradient-to-b from-green-50 to-gray-50 min-h-screen">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-5xl mx-auto bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
             <div className="p-8">
-              <h1 className="text-3xl font-bold mb-8 text-center">Add New Plant</h1>
+              <h1 className="text-3xl font-bold mb-6 text-center text-green-800">Add Your Green Friend</h1>
+              <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">Document your plants and track their growth journey. Each plant tells a story - start capturing yours today.</p>
 
               <form onSubmit={handleSubmit}>
-                <div className="grid md:grid-cols-5 gap-10">
-                  {/* Left column - Image Upload (3/5 width) */}
-                  <div className="md:col-span-3 flex flex-col items-center">
-                    <p className="text-base text-gray-600 mb-3 text-center">Upload pictures of your plant to identify</p>
-                    <div className="w-full">
-                      {userId && (
-                        <PlantImageWrapper
-                          userId={userId}
-                          onImageChange={handleImageChange}
-                          initialImageUrl={imageUrl}
-                        />
-                      )}
+                <div className="grid md:grid-cols-5 gap-8">
+                  <div className="md:col-span-5 mb-2">
+                    <div className="grid md:grid-cols-5 gap-6 items-start">
+                      {/* Left column - Image Upload (3/5 width) */}
+                      <div className="md:col-span-3">
+                        {userId && (
+                          <PlantImageWrapper
+                            userId={userId}
+                            onImageChange={handleImageChange}
+                            initialImageUrl={imageUrl}
+                            overlayText="Drop your plant photo here"
+                          />
+                        )}
+                      </div>
+
+                      {/* Right column - Form fields (2/5 width) */}
+                      <div className="md:col-span-2">
+                        <div className="space-y-5">
+                          <div>
+                            <Label htmlFor="name" className="text-base font-medium text-green-800">Plant Name</Label>
+                            <Input
+                              id="name"
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              placeholder="e.g. My Monstera"
+                              className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="location" className="text-base font-medium text-green-800">Room</Label>
+                            <Input
+                              id="location"
+                              value={location}
+                              onChange={(e) => setLocation(e.target.value)}
+                              placeholder="e.g. Living Room"
+                              className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="light-direction" className="flex items-center gap-2 text-base font-medium text-green-800">
+                              <Compass className="h-4 w-4 text-green-600" />
+                              Light Direction
+                            </Label>
+                            <Select value={lightDirection} onValueChange={setLightDirection}>
+                              <SelectTrigger className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500">
+                                <SelectValue placeholder="Select direction" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="north">North</SelectItem>
+                                <SelectItem value="east">East</SelectItem>
+                                <SelectItem value="south">South</SelectItem>
+                                <SelectItem value="west">West</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div>
+                            <Label htmlFor="light-brightness" className="flex items-center gap-2 text-base font-medium text-green-800">
+                              <Sun className="h-4 w-4 text-green-600" />
+                              Light Brightness
+                            </Label>
+                            <Select value={lightBrightness} onValueChange={setLightBrightness}>
+                              <SelectTrigger className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500">
+                                <SelectValue placeholder="Select brightness" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="low">Low Light</SelectItem>
+                                <SelectItem value="medium">Medium Light</SelectItem>
+                                <SelectItem value="bright">Bright Light</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div>
+                            <Label htmlFor="acquired_date" className="flex items-center gap-2 text-base font-medium text-green-800">
+                              <Calendar className="h-4 w-4 text-green-600" />
+                              Acquired Date
+                            </Label>
+                            <Input
+                              id="acquired_date"
+                              value={acquiredDate}
+                              onChange={(e) => setAcquiredDate(e.target.value)}
+                              type="date"
+                              className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Right column - Form fields (2/5 width) with exact height matching */}
-                  <div className="md:col-span-2 flex flex-col justify-between h-[28rem]">
-                    <div className="space-y-5">
-                      <div>
-                        <Label htmlFor="name" className="text-base font-medium">Plant Name</Label>
-                        <Input
-                          id="name"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="e.g. My Monstera"
-                          className="h-9 text-sm mt-1"
-                        />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="location" className="text-base font-medium">Room</Label>
-                        <Input
-                          id="location"
-                          value={location}
-                          onChange={(e) => setLocation(e.target.value)}
-                          placeholder="e.g. Living Room"
-                          className="h-9 text-sm mt-1"
-                        />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="light-direction" className="flex items-center gap-2 text-base font-medium">
-                          <Compass className="h-4 w-4" />
-                          Light Direction
-                        </Label>
-                        <Select value={lightDirection} onValueChange={setLightDirection}>
-                          <SelectTrigger className="h-9 text-sm mt-1">
-                            <SelectValue placeholder="Select direction" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="north">North</SelectItem>
-                            <SelectItem value="east">East</SelectItem>
-                            <SelectItem value="south">South</SelectItem>
-                            <SelectItem value="west">West</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <Label htmlFor="light-brightness" className="flex items-center gap-2 text-base font-medium">
-                          <Sun className="h-4 w-4" />
-                          Light Brightness
-                        </Label>
-                        <Select value={lightBrightness} onValueChange={setLightBrightness}>
-                          <SelectTrigger className="h-9 text-sm mt-1">
-                            <SelectValue placeholder="Select brightness" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="low">Low Light</SelectItem>
-                            <SelectItem value="medium">Medium Light</SelectItem>
-                            <SelectItem value="bright">Bright Light</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <Label htmlFor="acquired_date" className="flex items-center gap-2 text-base font-medium">
-                          <Calendar className="h-4 w-4" />
-                          Acquired Date
-                        </Label>
-                        <Input
-                          id="acquired_date"
-                          value={acquiredDate}
-                          onChange={(e) => setAcquiredDate(e.target.value)}
-                          type="date"
-                          className="h-9 text-sm mt-1"
-                        />
-                      </div>
-                    </div>
-                    
-                    {/* Action Buttons - Right aligned at the bottom */}
-                    <div className="flex justify-end gap-3 pb-1 mt-8">
-                      <Button 
-                        type="button" 
-                        variant="outline"
-                        onClick={() => router.push("/dashboard/plants")}
-                        className="min-w-28 h-10 text-sm"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        type="submit"
-                        className="bg-green-600 hover:bg-green-700 min-w-28 h-10 text-sm"
-                        disabled={loading}
-                      >
-                        {loading ? (
-                          "Adding..."
-                        ) : (
-                          <>
-                            <Leaf className="w-4 h-4 mr-2" />
-                            Add Plant
-                          </>
-                        )}
-                      </Button>
-                    </div>
+                  
+                  {/* Action Buttons - Centered at the bottom */}
+                  <div className="md:col-span-5 flex justify-center gap-4 mt-6">
+                    <Button 
+                      type="button" 
+                      variant="outline"
+                      onClick={() => router.push("/dashboard/plants")}
+                      className="min-w-28 h-10 text-sm border-green-200 text-green-800 hover:bg-green-50"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="bg-green-600 hover:bg-green-700 min-w-28 h-10 text-sm"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        "Adding..."
+                      ) : (
+                        <>
+                          <Leaf className="w-4 h-4 mr-2" />
+                          Add Plant
+                        </>
+                      )}
+                    </Button>
                   </div>
                 </div>
               </form>
             </div>
+          </div>
+          
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-600">Every plant you add helps create your personalized green space library.</p>
+            <p className="text-sm text-gray-600 mt-1">Track growth, care schedules, and beautiful moments with PlantPal.</p>
           </div>
         </div>
       </main>
