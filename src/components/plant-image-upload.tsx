@@ -179,10 +179,7 @@ export default function PlantImageUpload({
           />
           <div className="absolute inset-0 bg-gradient-to-b from-white-600/80 to-white-800/80 flex flex-col items-center justify-center">
             <ImageIcon className="w-12 h-12 mb-3 text-white/80" />
-            <h3 className="text-3xl font-bold text-white/80 mb-2 text-center px-4">{overlayText}</h3>
-            <p className="text-sm text-white/70 mb-6 text-center max-w-xs px-4">
-              Drag & drop a photo here or click to browse
-            </p>
+            <h3 className="text-3xl font-bold text-white/80 mb-6 text-center px-4">{overlayText}</h3>
             <Button
               type="button"
               variant="outline"
