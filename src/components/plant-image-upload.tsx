@@ -79,6 +79,15 @@ export default function PlantImageUpload({
     }
   };
 
+  // Add a direct click handler for the button
+  const triggerFileInput = () => {
+    // Find the file input element and click it
+    const fileInput = document.getElementById('plant-image-upload');
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
   return (
     <div className="border-2 border-dashed border-gray-300 rounded-lg h-96 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 transition-colors relative overflow-hidden">
       {imageUrl ? (
@@ -90,26 +99,25 @@ export default function PlantImageUpload({
           />
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">Upload Photo Here</h3>
-            <label htmlFor="plant-image-upload" className="cursor-pointer">
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="text-base bg-white px-6"
-                disabled={uploading}
-              >
-                {uploading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Uploading...
-                  </>
-                ) : (
-                  <>
-                    <Upload className="mr-2 h-5 w-5" />
-                    Upload
-                  </>
-                )}
-              </Button>
-            </label>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="text-base bg-white px-6"
+              disabled={uploading}
+              onClick={triggerFileInput}
+            >
+              {uploading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Upload className="mr-2 h-5 w-5" />
+                  Upload
+                </>
+              )}
+            </Button>
           </div>
         </div>
       ) : (
@@ -118,27 +126,26 @@ export default function PlantImageUpload({
           <h3 className="text-2xl font-bold text-gray-800 mb-2">Upload Photo Here</h3>
           <p className="text-base text-gray-400 mt-1 mb-4">Tap to browse or drag and drop</p>
           <div className="flex gap-4">
-            <label htmlFor="plant-image-upload">
-              <Button
-                type="button"
-                variant="outline"
-                size="lg"
-                className="cursor-pointer text-base px-6"
-                disabled={uploading}
-              >
-                {uploading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Uploading...
-                  </>
-                ) : (
-                  <>
-                    <Upload className="w-5 h-5 mr-2" />
-                    Upload
-                  </>
-                )}
-              </Button>
-            </label>
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              className="cursor-pointer text-base px-6"
+              disabled={uploading}
+              onClick={triggerFileInput}
+            >
+              {uploading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Upload className="w-5 h-5 mr-2" />
+                  Upload
+                </>
+              )}
+            </Button>
             <Button
               type="button"
               variant="outline"

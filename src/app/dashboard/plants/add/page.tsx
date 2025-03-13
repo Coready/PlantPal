@@ -42,6 +42,17 @@ export default function AddPlantPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate name field only when submitting
+    if (!name.trim()) {
+      toast({
+        title: "Name required",
+        description: "Please provide a name for your plant.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setLoading(true);
 
     try {
@@ -118,7 +129,6 @@ export default function AddPlantPage() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="e.g. My Monstera"
-                        required
                         className="h-12 text-lg"
                       />
                     </div>
