@@ -1,64 +1,95 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import DashboardNavbar from "@/components/dashboard-navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Camera, Leaf, Upload } from "lucide-react";
-import { redirect } from "next/navigation";
-import { createClient } from "../../../../../supabase/server";
+import { Leaf } from "lucide-react";
+import { createClient } from "../../../../../supabase/client";
+import PlantImageWrapper from "@/components/plant-image-wrapper";
+import { toast } from "@/components/ui/use-toast";
 
-export default async function AddPlantPage() {
-  const supabase = await createClient();
+export default function AddPlantPage() {
+  const router = useRouter();
+  const supabase = createClient();
+  const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>("https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&q=80");
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Form state
+  const [name, setName] = useState("");
+  const [species, setSpecies] = useState("");
+  const [location, setLocation] = useState("");
+  const [acquiredDate, setAcquiredDate] = useState("");
+  const [notes, setNotes] = useState("");
 
-  if (!user) {
-    return redirect("/sign-in");
-  }
-
-  async function addPlant(formData: FormData) {
-    "use server";
-
-    const name = formData.get("name") as string;
-    const species = formData.get("species") as string;
-    const location = formData.get("location") as string;
-    const acquired_date = formData.get("acquired_date") as string;
-    const notes = formData.get("notes") as string;
-    const image_url =
-      (formData.get("image_url") as string) ||
-      "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&q=80";
-
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return redirect("/sign-in");
+  // Get user ID on component mount
+  useEffect(() => {
+    async function getUserId() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserId(user.id);
+      } else {
+        router.push("/sign-in");
+      }
     }
+    getUserId();
+  }, [supabase, router]);
 
-    const { data, error } = await supabase
-      .from("plants")
-      .insert({
-        name,
-        species,
-        location,
-        acquired_date,
-        notes,
-        image_url,
-        user_id: user.id,
-      })
-      .select();
+  const handleImageChange = (url: string) => {
+    setImageUrl(url);
+  };
 
-    if (error) {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        router.push("/sign-in");
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("plants")
+        .insert({
+          name,
+          species,
+          location,
+          acquired_date: acquiredDate,
+          notes,
+          image_url: imageUrl,
+          user_id: user.id,
+        })
+        .select();
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Plant added",
+        description: "Your plant has been successfully added.",
+        variant: "default",
+      });
+
+      router.push("/dashboard/plants");
+    } catch (error) {
       console.error("Error adding plant:", error);
-      return;
+      toast({
+        title: "Error",
+        description: "There was an error adding your plant.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
-
-    return redirect("/dashboard/plants");
-  }
+  };
 
   return (
     <>
@@ -69,41 +100,16 @@ export default async function AddPlantPage() {
             <div className="p-6">
               <h1 className="text-2xl font-bold mb-6">Add New Plant</h1>
 
-              <form action={addPlant} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="md:w-1/3">
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg h-48 flex flex-col items-center justify-center bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors">
-                      <Camera className="w-8 h-8 text-gray-400 mb-2" />
-                      <p className="text-sm text-gray-500">
-                        Upload Plant Photo
-                      </p>
-                      <p className="text-xs text-gray-400 mt-1">or</p>
-                      <div className="mt-2 flex gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          className="text-xs"
-                        >
-                          <Upload className="w-3 h-3 mr-1" />
-                          Browse
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          className="text-xs"
-                        >
-                          <Camera className="w-3 h-3 mr-1" />
-                          Take Photo
-                        </Button>
-                      </div>
-                      <Input
-                        type="hidden"
-                        name="image_url"
-                        value="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&q=80"
+                    {userId && (
+                      <PlantImageWrapper
+                        userId={userId}
+                        onImageChange={handleImageChange}
+                        initialImageUrl={imageUrl}
                       />
-                    </div>
+                    )}
                   </div>
 
                   <div className="md:w-2/3 space-y-4">
@@ -111,7 +117,8 @@ export default async function AddPlantPage() {
                       <Label htmlFor="name">Plant Name *</Label>
                       <Input
                         id="name"
-                        name="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         placeholder="e.g. My Monstera"
                         required
                       />
@@ -121,7 +128,8 @@ export default async function AddPlantPage() {
                       <Label htmlFor="species">Species</Label>
                       <Input
                         id="species"
-                        name="species"
+                        value={species}
+                        onChange={(e) => setSpecies(e.target.value)}
                         placeholder="e.g. Monstera Deliciosa"
                       />
                     </div>
@@ -131,7 +139,8 @@ export default async function AddPlantPage() {
                         <Label htmlFor="location">Location</Label>
                         <Input
                           id="location"
-                          name="location"
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
                           placeholder="e.g. Living Room"
                         />
                       </div>
@@ -140,7 +149,8 @@ export default async function AddPlantPage() {
                         <Label htmlFor="acquired_date">Acquired Date</Label>
                         <Input
                           id="acquired_date"
-                          name="acquired_date"
+                          value={acquiredDate}
+                          onChange={(e) => setAcquiredDate(e.target.value)}
                           type="date"
                         />
                       </div>
@@ -152,22 +162,34 @@ export default async function AddPlantPage() {
                   <Label htmlFor="notes">Notes</Label>
                   <Textarea
                     id="notes"
-                    name="notes"
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
                     placeholder="Add any notes about your plant here..."
                     rows={4}
                   />
                 </div>
 
                 <div className="pt-4 flex justify-end gap-3">
-                  <Button type="button" variant="outline">
+                  <Button 
+                    type="button" 
+                    variant="outline"
+                    onClick={() => router.push("/dashboard/plants")}
+                  >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
                     className="bg-green-600 hover:bg-green-700"
+                    disabled={loading}
                   >
-                    <Leaf className="w-4 h-4 mr-2" />
-                    Add Plant
+                    {loading ? (
+                      "Adding..."
+                    ) : (
+                      <>
+                        <Leaf className="w-4 h-4 mr-2" />
+                        Add Plant
+                      </>
+                    )}
                   </Button>
                 </div>
               </form>
