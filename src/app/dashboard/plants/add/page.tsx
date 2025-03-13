@@ -130,7 +130,7 @@ export default function AddPlantPage() {
                             userId={userId}
                             onImageChange={handleImageChange}
                             initialImageUrl={imageUrl}
-                            overlayText="Drop your plant photo here"
+                            overlayText=""
                           />
                         )}
                       </div>
@@ -145,7 +145,7 @@ export default function AddPlantPage() {
                               value={name}
                               onChange={(e) => setName(e.target.value)}
                               placeholder="e.g. My Monstera"
-                              className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500"
+                              className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500 hover:border-green-400 transition-colors"
                             />
                           </div>
 
@@ -156,7 +156,7 @@ export default function AddPlantPage() {
                               value={location}
                               onChange={(e) => setLocation(e.target.value)}
                               placeholder="e.g. Living Room"
-                              className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500"
+                              className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500 hover:border-green-400 transition-colors"
                             />
                           </div>
 
@@ -166,7 +166,7 @@ export default function AddPlantPage() {
                               Light Direction
                             </Label>
                             <Select value={lightDirection} onValueChange={setLightDirection}>
-                              <SelectTrigger className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500">
+                              <SelectTrigger className="h-9 text-sm border-green-200 focus:border-green-500 focus:ring-green-500 pl-10 [&>span>svg]:text-green-600 hover:border-green-400 transition-colors">
                                 <SelectValue placeholder="Select direction" />
                               </SelectTrigger>
                               <SelectContent>
@@ -184,7 +184,7 @@ export default function AddPlantPage() {
                               Light Brightness
                             </Label>
                             <Select value={lightBrightness} onValueChange={setLightBrightness}>
-                              <SelectTrigger className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500">
+                              <SelectTrigger className="h-9 text-sm border-green-200 focus:border-green-500 focus:ring-green-500 pl-10 [&>span>svg]:text-green-600 hover:border-green-400 transition-colors">
                                 <SelectValue placeholder="Select brightness" />
                               </SelectTrigger>
                               <SelectContent>
@@ -204,12 +204,26 @@ export default function AddPlantPage() {
                                 id="acquired_date"
                                 value={acquiredDate}
                                 onChange={(e) => setAcquiredDate(e.target.value)}
-                                type="date"
-                                className="h-9 text-sm border-green-200 focus:border-green-500 focus:ring-green-500 pr-10"
+                                type="text" 
+                                placeholder="YYYY-MM-DD"
+                                className="h-9 text-sm border-green-200 focus:border-green-500 focus:ring-green-500 pr-10 hover:border-green-400 transition-colors"
+                                onClick={() => document.getElementById('date_picker')?.click()}
+                                readOnly
                               />
-                              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                              <input 
+                                id="date_picker" 
+                                type="date" 
+                                value={acquiredDate}
+                                onChange={(e) => setAcquiredDate(e.target.value)}
+                                className="sr-only"
+                              />
+                              <button 
+                                type="button" 
+                                className="absolute inset-y-0 right-0 flex items-center pr-3"
+                                onClick={() => document.getElementById('date_picker')?.click()}
+                              >
                                 <Calendar className="h-4 w-4 text-green-600" />
-                              </div>
+                              </button>
                             </div>
                           </div>
                         </div>

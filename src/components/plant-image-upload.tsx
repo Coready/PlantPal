@@ -126,7 +126,7 @@ export default function PlantImageUpload({
 
   return (
     <div 
-      className={`relative h-[28rem] w-full rounded-lg border-2 border-dashed ${isDragging ? 'border-green-400 bg-green-50' : 'border-green-300 bg-green-50'} flex flex-col items-center justify-center overflow-hidden transition-colors duration-200`}
+      className={`relative h-[28rem] w-full rounded-lg border-2 border-dashed ${isDragging ? 'border-green-400 bg-green-50' : 'border-green-300 hover:border-green-400 bg-green-50'} flex flex-col items-center justify-center overflow-hidden transition-colors duration-200`}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
@@ -178,8 +178,7 @@ export default function PlantImageUpload({
             className="sr-only"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-white-600/80 to-white-800/80 flex flex-col items-center justify-center">
-            <ImageIcon className="w-12 h-12 mb-3 text-white/80" />
-            <h3 className="text-3xl font-bold text-white/80 mb-6 text-center px-4">{overlayText}</h3>
+            <ImageIcon className="w-12 h-12 mb-6 text-white/80" />
             <Button
               type="button"
               variant="outline"
