@@ -6,7 +6,6 @@ import DashboardNavbar from "@/components/dashboard-navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Leaf, Calendar } from "lucide-react";
 import { createClient } from "../../../../../supabase/client";
 import PlantImageWrapper from "@/components/plant-image-wrapper";
@@ -23,7 +22,6 @@ export default function AddPlantPage() {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [acquiredDate, setAcquiredDate] = useState(new Date().toISOString().split('T')[0]); // Today's date
-  const [notes, setNotes] = useState("");
 
   // Get user ID on component mount
   useEffect(() => {
@@ -60,7 +58,7 @@ export default function AddPlantPage() {
           name,
           location,
           acquired_date: acquiredDate,
-          notes,
+          notes: "", // Empty notes
           image_url: imageUrl,
           user_id: user.id,
         })
@@ -99,33 +97,20 @@ export default function AddPlantPage() {
               <h1 className="text-2xl font-bold mb-6 text-center">Add New Plant</h1>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Image Upload - Centered and Larger */}
-                <div className="flex justify-center mb-6">
-                  <div className="w-full max-w-md">
-                    {userId && (
-                      <PlantImageWrapper
-                        userId={userId}
-                        onImageChange={handleImageChange}
-                        initialImageUrl={imageUrl}
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Left column - Form fields */}
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Plant Name *</Label>
+                      <Input
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="e.g. My Monstera"
+                        required
                       />
-                    )}
-                  </div>
-                </div>
+                    </div>
 
-                {/* Plant Details */}
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Plant Name *</Label>
-                    <Input
-                      id="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. My Monstera"
-                      required
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="location">Location</Label>
                       <Input
@@ -148,42 +133,44 @@ export default function AddPlantPage() {
                         type="date"
                       />
                     </div>
+                    
+                    {/* Action Buttons - Moved up */}
+                    <div className="pt-4 flex gap-3">
+                      <Button 
+                        type="button" 
+                        variant="outline"
+                        onClick={() => router.push("/dashboard/plants")}
+                        className="flex-1"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        type="submit"
+                        className="bg-green-600 hover:bg-green-700 flex-1"
+                        disabled={loading}
+                      >
+                        {loading ? (
+                          "Adding..."
+                        ) : (
+                          <>
+                            <Leaf className="w-4 h-4 mr-2" />
+                            Add Plant
+                          </>
+                        )}
+                      </Button>
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="notes">Notes (Optional)</Label>
-                    <Textarea
-                      id="notes"
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Add any notes about your plant here..."
-                      rows={3}
-                    />
-                  </div>
-                </div>
-
-                <div className="pt-4 flex justify-center gap-3">
-                  <Button 
-                    type="button" 
-                    variant="outline"
-                    onClick={() => router.push("/dashboard/plants")}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    className="bg-green-600 hover:bg-green-700"
-                    disabled={loading}
-                  >
-                    {loading ? (
-                      "Adding..."
-                    ) : (
-                      <>
-                        <Leaf className="w-4 h-4 mr-2" />
-                        Add Plant
-                      </>
+                  {/* Right column - Image Upload */}
+                  <div className="flex items-center justify-center">
+                    {userId && (
+                      <PlantImageWrapper
+                        userId={userId}
+                        onImageChange={handleImageChange}
+                        initialImageUrl={imageUrl}
+                      />
                     )}
-                  </Button>
+                  </div>
                 </div>
               </form>
             </div>

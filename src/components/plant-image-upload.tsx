@@ -86,24 +86,25 @@ export default function PlantImageUpload({
           <img 
             src={imageUrl} 
             alt="Plant" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-40"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <h3 className="text-xl font-bold text-gray-800 mb-3">Upload Photo Here</h3>
             <label htmlFor="plant-image-upload" className="cursor-pointer">
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="text-xs bg-white"
+                className="text-sm bg-white"
                 disabled={uploading}
               >
                 {uploading ? (
                   <>
-                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Uploading...
                   </>
                 ) : (
                   <>
-                    <Upload className="mr-2 h-3 w-3" />
+                    <Upload className="mr-2 h-4 w-4" />
                     Change Photo
                   </>
                 )}
@@ -114,7 +115,7 @@ export default function PlantImageUpload({
       ) : (
         <>
           <ImageIcon className="w-12 h-12 text-gray-400 mb-3" />
-          <p className="text-base text-gray-500 font-medium">Upload Plant Photo</p>
+          <h3 className="text-xl font-bold text-gray-800 mb-1">Upload Photo Here</h3>
           <p className="text-sm text-gray-400 mt-1 mb-3">Tap to browse or drag and drop</p>
           <div className="flex gap-3">
             <label htmlFor="plant-image-upload">
