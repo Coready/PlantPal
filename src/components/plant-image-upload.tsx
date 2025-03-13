@@ -147,7 +147,7 @@ export default function PlantImageUpload({
                 type="button"
                 variant="outline"
                 size="sm"
-                className="text-xs hover:bg-green-50 transition-colors duration-300 border border-green-300 bg-transparent text-green-700"
+                className="text-xs hover:bg-green-50 transition-colors duration-300 bg-white border-green-300 text-green-700"
                 onClick={(e) => {
                   e.stopPropagation();
                   triggerFileInput(e);
@@ -187,7 +187,7 @@ export default function PlantImageUpload({
               type="button"
               variant="outline"
               size="sm"
-              className="text-xs hover:bg-green-50 transition-colors duration-300 border border-green-300 bg-transparent text-green-700"
+              className="text-xs hover:bg-green-50 transition-colors duration-300 bg-white border-green-300 text-green-700"
               onClick={(e) => {
                 e.stopPropagation();
                 triggerFileInput(e);
