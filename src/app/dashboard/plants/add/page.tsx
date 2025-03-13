@@ -161,46 +161,38 @@ export default function AddPlantPage() {
                           </div>
 
                           <div>
-                            <Label htmlFor="light-direction" className="text-base font-medium text-green-800">
+                            <Label htmlFor="light-direction" className="flex items-center gap-2 text-base font-medium text-green-800">
+                              <Compass className="h-4 w-4 text-green-600" />
                               Light Direction
                             </Label>
-                            <div className="relative mt-1">
-                              <Select value={lightDirection} onValueChange={setLightDirection}>
-                                <SelectTrigger className="h-9 text-sm border-green-200 focus:border-green-500 focus:ring-green-500 pl-10 [&>span>svg]:text-green-600">
-                                  <SelectValue placeholder="Select direction" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="north">North</SelectItem>
-                                  <SelectItem value="east">East</SelectItem>
-                                  <SelectItem value="south">South</SelectItem>
-                                  <SelectItem value="west">West</SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <Compass className="h-4 w-4 text-green-600" />
-                              </div>
-                            </div>
+                            <Select value={lightDirection} onValueChange={setLightDirection}>
+                              <SelectTrigger className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500">
+                                <SelectValue placeholder="Select direction" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="north">North</SelectItem>
+                                <SelectItem value="east">East</SelectItem>
+                                <SelectItem value="south">South</SelectItem>
+                                <SelectItem value="west">West</SelectItem>
+                              </SelectContent>
+                            </Select>
                           </div>
 
                           <div>
-                            <Label htmlFor="light-brightness" className="text-base font-medium text-green-800">
+                            <Label htmlFor="light-brightness" className="flex items-center gap-2 text-base font-medium text-green-800">
+                              <Sun className="h-4 w-4 text-green-600" />
                               Light Brightness
                             </Label>
-                            <div className="relative mt-1">
-                              <Select value={lightBrightness} onValueChange={setLightBrightness}>
-                                <SelectTrigger className="h-9 text-sm border-green-200 focus:border-green-500 focus:ring-green-500 pl-10 [&>span>svg]:text-green-600">
-                                  <SelectValue placeholder="Select brightness" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="low">Low Light</SelectItem>
-                                  <SelectItem value="medium">Medium Light</SelectItem>
-                                  <SelectItem value="bright">Bright Light</SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <Sun className="h-4 w-4 text-green-600" />
-                              </div>
-                            </div>
+                            <Select value={lightBrightness} onValueChange={setLightBrightness}>
+                              <SelectTrigger className="h-9 text-sm mt-1 border-green-200 focus:border-green-500 focus:ring-green-500">
+                                <SelectValue placeholder="Select brightness" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="low">Low Light</SelectItem>
+                                <SelectItem value="medium">Medium Light</SelectItem>
+                                <SelectItem value="bright">Bright Light</SelectItem>
+                              </SelectContent>
+                            </Select>
                           </div>
 
                           <div>

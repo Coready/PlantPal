@@ -147,7 +147,7 @@ export default function PlantImageUpload({
                 type="button"
                 variant="outline"
                 size="sm"
-                className="text-xs hover:bg-green-50 transition-colors duration-300 bg-white border-green-300 text-green-700"
+                className="text-xs hover:bg-green-50 transition-colors duration-300 border border-white bg-transparent text-white"
                 onClick={(e) => {
                   e.stopPropagation();
                   triggerFileInput(e);
@@ -177,7 +177,7 @@ export default function PlantImageUpload({
             onChange={handleFileChange}
             className="sr-only"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-green-600/80 to-green-800/80 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-gradient-to-b from-white-600/80 to-white-800/80 flex flex-col items-center justify-center">
             <ImageIcon className="w-12 h-12 mb-3 text-white/80" />
             <h3 className="text-3xl font-bold text-white/80 mb-2 text-center px-4">{overlayText}</h3>
             <p className="text-sm text-white/70 mb-6 text-center max-w-xs px-4">
@@ -187,7 +187,7 @@ export default function PlantImageUpload({
               type="button"
               variant="outline"
               size="sm"
-              className="text-xs hover:bg-green-50 transition-colors duration-300 bg-white border-green-300 text-green-700"
+              className="text-xs hover:bg-green-50 transition-colors duration-300 border border-white bg-transparent text-white"
               onClick={(e) => {
                 e.stopPropagation();
                 triggerFileInput(e);
