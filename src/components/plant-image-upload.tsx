@@ -146,8 +146,8 @@ export default function PlantImageUpload({
               <Button
                 type="button"
                 variant="outline"
-                size="sm"
-                className="text-xs hover:bg-green-50 transition-colors duration-300 border border-white bg-transparent text-white"
+                size="lg"
+                className="text-base hover:bg-green-50 transition-colors duration-300 border-2 border-white bg-transparent text-white px-5 py-3"
                 onClick={(e) => {
                   e.stopPropagation();
                   triggerFileInput(e);
@@ -161,7 +161,7 @@ export default function PlantImageUpload({
                 ) : (
                   <>
                     <Upload className="h-3 w-3 mr-1" />
-                    Upload Photo
+                    Upload your plant photos
                   </>
                 )}
               </Button>
@@ -182,8 +182,8 @@ export default function PlantImageUpload({
             <Button
               type="button"
               variant="outline"
-              size="sm"
-              className="text-xs hover:bg-green-50 transition-colors duration-300 border border-white bg-transparent text-white"
+              size="lg"
+              className="text-base hover:bg-green-50 transition-colors duration-300 border-2 border-white bg-transparent text-white px-5 py-3"
               onClick={(e) => {
                 e.stopPropagation();
                 triggerFileInput(e);
@@ -198,7 +198,7 @@ export default function PlantImageUpload({
               ) : (
                 <>
                   <Upload className="h-3 w-3 mr-1" />
-                  Upload Photo
+                  Upload your plant photos
                 </>
               )}
             </Button>
