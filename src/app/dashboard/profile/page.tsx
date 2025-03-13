@@ -10,15 +10,15 @@ import { UserCircle, Mail, Calendar } from "lucide-react";
 export default async function ProfilePage() {
   const supabase = await createClient();
   
-  // Hole den aktuellen Benutzer
+  // Get the current user
   const { data: { user }, error } = await supabase.auth.getUser();
   
-  // Wenn kein Benutzer gefunden wurde, zur Login-Seite umleiten
+  // If no user is found, redirect to login page
   if (!user || error) {
     return redirect("/sign-in");
   }
   
-  // Hole zusätzliche Benutzerdaten aus der users-Tabelle
+  // Get additional user data from the users table
   const { data: profile } = await supabase
     .from("users")
     .select("*")
@@ -31,7 +31,7 @@ export default async function ProfilePage() {
       <main className="w-full bg-gray-50 min-h-screen">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">Mein Profil</h1>
+            <h1 className="text-3xl font-bold mb-6">My Profile</h1>
             
             <Card className="shadow-sm">
               <CardHeader className="pb-4">
@@ -40,8 +40,8 @@ export default async function ProfilePage() {
                     <UserCircle className="h-12 w-12 text-green-600" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl">{profile?.full_name || "Pflanzenfreund"}</CardTitle>
-                    <CardDescription>Mitglied seit {new Date(user.created_at).toLocaleDateString()}</CardDescription>
+                    <CardTitle className="text-2xl">{profile?.full_name || "Plant Lover"}</CardTitle>
+                    <CardDescription>Member since {new Date(user.created_at).toLocaleDateString()}</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -51,7 +51,7 @@ export default async function ProfilePage() {
                   <div className="space-y-2">
                     <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                       <Mail className="h-4 w-4" />
-                      E-Mail
+                      Email
                     </div>
                     <div className="font-medium">{user.email}</div>
                   </div>
@@ -59,37 +59,37 @@ export default async function ProfilePage() {
                   <div className="space-y-2">
                     <div className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
-                      Konto erstellt am
+                      Account created on
                     </div>
                     <div className="font-medium">{new Date(user.created_at).toLocaleDateString()}</div>
                   </div>
                 </div>
                 
                 <div className="pt-4">
-                  <h3 className="text-lg font-medium mb-2">Über mich</h3>
+                  <h3 className="text-lg font-medium mb-2">About me</h3>
                   <p className="text-gray-600">
-                    {profile?.bio || "Keine Biografie vorhanden. Bearbeite dein Profil, um mehr über dich zu erzählen."}
+                    {profile?.bio || "No biography available. Edit your profile to tell more about yourself."}
                   </p>
                 </div>
               </CardContent>
               
               <CardFooter className="flex justify-between pt-6">
                 <Button variant="outline" asChild>
-                  <Link href="/dashboard">Zurück zum Dashboard</Link>
+                  <Link href="/dashboard">Back to Dashboard</Link>
                 </Button>
                 <div className="flex gap-3">
                   <Button variant="outline" asChild>
-                    <Link href="/dashboard/profile/edit">Profil bearbeiten</Link>
+                    <Link href="/dashboard/profile/edit">Edit Profile</Link>
                   </Button>
                   <form action={signOutAction}>
-                    <Button variant="destructive" type="submit">Abmelden</Button>
+                    <Button variant="destructive" type="submit">Sign Out</Button>
                   </form>
                 </div>
               </CardFooter>
             </Card>
             
             <div className="mt-8">
-              <h2 className="text-2xl font-semibold mb-4">Meine Statistiken</h2>
+              <h2 className="text-2xl font-semibold mb-4">My Statistics</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Card>
                   <CardContent className="pt-6">
@@ -97,7 +97,7 @@ export default async function ProfilePage() {
                       <p className="text-3xl font-bold text-green-600">
                         {profile?.plants_count || 0}
                       </p>
-                      <p className="text-sm text-gray-500 mt-1">Pflanzen</p>
+                      <p className="text-sm text-gray-500 mt-1">Plants</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -108,7 +108,7 @@ export default async function ProfilePage() {
                       <p className="text-3xl font-bold text-blue-600">
                         {profile?.watering_count || 0}
                       </p>
-                      <p className="text-sm text-gray-500 mt-1">Bewässerungen</p>
+                      <p className="text-sm text-gray-500 mt-1">Waterings</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -119,7 +119,7 @@ export default async function ProfilePage() {
                       <p className="text-3xl font-bold text-amber-600">
                         {profile?.fertilizing_count || 0}
                       </p>
-                      <p className="text-sm text-gray-500 mt-1">Düngungen</p>
+                      <p className="text-sm text-gray-500 mt-1">Fertilizations</p>
                     </div>
                   </CardContent>
                 </Card>

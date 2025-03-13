@@ -42,7 +42,7 @@ export default function EditProfilePage() {
           setBio(profile.bio || "");
         }
       } catch (error) {
-        console.error("Fehler beim Laden des Profils:", error);
+        console.error("Error loading profile:", error);
       } finally {
         setInitialLoading(false);
       }
@@ -77,18 +77,18 @@ export default function EditProfilePage() {
       }
       
       toast({
-        title: "Profil aktualisiert",
-        description: "Deine Profilinformationen wurden erfolgreich aktualisiert.",
+        title: "Profile updated",
+        description: "Your profile information has been successfully updated.",
         variant: "default",
       });
       
       router.push("/dashboard/profile");
       router.refresh();
     } catch (error) {
-      console.error("Fehler beim Aktualisieren des Profils:", error);
+      console.error("Error updating profile:", error);
       toast({
-        title: "Fehler",
-        description: "Beim Aktualisieren des Profils ist ein Fehler aufgetreten.",
+        title: "Error",
+        description: "An error occurred while updating your profile.",
         variant: "destructive",
       });
     } finally {
@@ -115,13 +115,13 @@ export default function EditProfilePage() {
       <main className="w-full bg-gray-50 min-h-screen">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">Profil bearbeiten</h1>
+            <h1 className="text-3xl font-bold mb-6">Edit Profile</h1>
             
             <Card className="shadow-sm">
               <CardHeader>
-                <CardTitle>Persönliche Informationen</CardTitle>
+                <CardTitle>Personal Information</CardTitle>
                 <CardDescription>
-                  Aktualisiere deine Profilinformationen
+                  Update your profile information
                 </CardDescription>
               </CardHeader>
               
@@ -133,17 +133,17 @@ export default function EditProfilePage() {
                       id="fullName" 
                       value={fullName} 
                       onChange={(e) => setFullName(e.target.value)}
-                      placeholder="Dein vollständiger Name"
+                      placeholder="Your full name"
                     />
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="bio">Über mich</Label>
+                    <Label htmlFor="bio">About me</Label>
                     <Textarea 
                       id="bio" 
                       value={bio} 
                       onChange={(e) => setBio(e.target.value)}
-                      placeholder="Erzähle etwas über dich und deine Pflanzen..."
+                      placeholder="Tell us about yourself and your plants..."
                       rows={4}
                     />
                   </div>
@@ -151,16 +151,16 @@ export default function EditProfilePage() {
                 
                 <CardFooter className="flex justify-between">
                   <Button variant="outline" asChild>
-                    <Link href="/dashboard/profile">Abbrechen</Link>
+                    <Link href="/dashboard/profile">Cancel</Link>
                   </Button>
                   <Button type="submit" disabled={loading} className="bg-green-600 hover:bg-green-700">
                     {loading ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Wird gespeichert...
+                        Saving...
                       </>
                     ) : (
-                      "Speichern"
+                      "Save"
                     )}
                   </Button>
                 </CardFooter>

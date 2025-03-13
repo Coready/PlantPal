@@ -74,13 +74,13 @@ export default function DashboardNavbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <Link href="/dashboard/profile">Profil</Link>
+                <Link href="/dashboard/profile">Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="#">Einstellungen</Link>
+                <Link href="#">Settings</Link>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleSignOut}>
-                Abmelden
+                Sign Out
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
