@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Leaf } from "lucide-react";
+import { Leaf, Calendar } from "lucide-react";
 import { createClient } from "../../../../../supabase/client";
 import PlantImageWrapper from "@/components/plant-image-wrapper";
 import { toast } from "@/components/ui/use-toast";
@@ -21,9 +21,8 @@ export default function AddPlantPage() {
 
   // Form state
   const [name, setName] = useState("");
-  const [species, setSpecies] = useState("");
   const [location, setLocation] = useState("");
-  const [acquiredDate, setAcquiredDate] = useState("");
+  const [acquiredDate, setAcquiredDate] = useState(new Date().toISOString().split('T')[0]); // Today's date
   const [notes, setNotes] = useState("");
 
   // Get user ID on component mount
@@ -59,7 +58,6 @@ export default function AddPlantPage() {
         .from("plants")
         .insert({
           name,
-          species,
           location,
           acquired_date: acquiredDate,
           notes,
@@ -98,11 +96,12 @@ export default function AddPlantPage() {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
             <div className="p-6">
-              <h1 className="text-2xl font-bold mb-6">Add New Plant</h1>
+              <h1 className="text-2xl font-bold mb-6 text-center">Add New Plant</h1>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="md:w-1/3">
+                {/* Image Upload - Centered and Larger */}
+                <div className="flex justify-center mb-6">
+                  <div className="w-full max-w-md">
                     {userId && (
                       <PlantImageWrapper
                         userId={userId}
@@ -111,65 +110,59 @@ export default function AddPlantPage() {
                       />
                     )}
                   </div>
+                </div>
 
-                  <div className="md:w-2/3 space-y-4">
+                {/* Plant Details */}
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Plant Name *</Label>
+                    <Input
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. My Monstera"
+                      required
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Plant Name *</Label>
+                      <Label htmlFor="location">Location</Label>
                       <Input
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="e.g. My Monstera"
-                        required
+                        id="location"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        placeholder="e.g. Living Room"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="species">Species</Label>
+                      <Label htmlFor="acquired_date" className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        Acquired Date
+                      </Label>
                       <Input
-                        id="species"
-                        value={species}
-                        onChange={(e) => setSpecies(e.target.value)}
-                        placeholder="e.g. Monstera Deliciosa"
+                        id="acquired_date"
+                        value={acquiredDate}
+                        onChange={(e) => setAcquiredDate(e.target.value)}
+                        type="date"
                       />
                     </div>
+                  </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="location">Location</Label>
-                        <Input
-                          id="location"
-                          value={location}
-                          onChange={(e) => setLocation(e.target.value)}
-                          placeholder="e.g. Living Room"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="acquired_date">Acquired Date</Label>
-                        <Input
-                          id="acquired_date"
-                          value={acquiredDate}
-                          onChange={(e) => setAcquiredDate(e.target.value)}
-                          type="date"
-                        />
-                      </div>
-                    </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="notes">Notes (Optional)</Label>
+                    <Textarea
+                      id="notes"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="Add any notes about your plant here..."
+                      rows={3}
+                    />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="notes">Notes</Label>
-                  <Textarea
-                    id="notes"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Add any notes about your plant here..."
-                    rows={4}
-                  />
-                </div>
-
-                <div className="pt-4 flex justify-end gap-3">
+                <div className="pt-4 flex justify-center gap-3">
                   <Button 
                     type="button" 
                     variant="outline"

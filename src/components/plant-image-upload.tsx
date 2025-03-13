@@ -80,7 +80,7 @@ export default function PlantImageUpload({
   };
 
   return (
-    <div className="border-2 border-dashed border-gray-300 rounded-lg h-48 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 transition-colors relative overflow-hidden">
+    <div className="border-2 border-dashed border-gray-300 rounded-lg h-64 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 transition-colors relative overflow-hidden">
       {imageUrl ? (
         <div className="w-full h-full relative group">
           <img 
@@ -113,27 +113,27 @@ export default function PlantImageUpload({
         </div>
       ) : (
         <>
-          <ImageIcon className="w-8 h-8 text-gray-400 mb-2" />
-          <p className="text-sm text-gray-500">Upload Plant Photo</p>
-          <p className="text-xs text-gray-400 mt-1">or</p>
-          <div className="mt-2 flex gap-2">
+          <ImageIcon className="w-12 h-12 text-gray-400 mb-3" />
+          <p className="text-base text-gray-500 font-medium">Upload Plant Photo</p>
+          <p className="text-sm text-gray-400 mt-1 mb-3">Tap to browse or drag and drop</p>
+          <div className="flex gap-3">
             <label htmlFor="plant-image-upload">
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
-                className="text-xs cursor-pointer"
+                className="cursor-pointer"
                 disabled={uploading}
               >
                 {uploading ? (
                   <>
-                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Uploading...
                   </>
                 ) : (
                   <>
-                    <Upload className="w-3 h-3 mr-1" />
-                    Browse
+                    <Upload className="w-4 h-4 mr-2" />
+                    Browse Files
                   </>
                 )}
               </Button>
@@ -142,10 +142,9 @@ export default function PlantImageUpload({
               type="button"
               variant="outline"
               size="sm"
-              className="text-xs"
               disabled={true}
             >
-              <Camera className="w-3 h-3 mr-1" />
+              <Camera className="w-4 h-4 mr-2" />
               Take Photo
             </Button>
           </div>
