@@ -80,7 +80,11 @@ export default function PlantImageUpload({
   };
 
   // Add a direct click handler for the button
-  const triggerFileInput = () => {
+  const triggerFileInput = (e: React.MouseEvent) => {
+    // Prevent any form submission
+    e.preventDefault();
+    e.stopPropagation();
+    
     // Find the file input element and click it
     const fileInput = document.getElementById('plant-image-upload');
     if (fileInput) {
@@ -105,6 +109,7 @@ export default function PlantImageUpload({
               className="text-base bg-white px-6"
               disabled={uploading}
               onClick={triggerFileInput}
+              type="button" // Explicitly set type to button to prevent form submission
             >
               {uploading ? (
                 <>
@@ -127,7 +132,7 @@ export default function PlantImageUpload({
           <p className="text-base text-gray-400 mt-1 mb-4">Tap to browse or drag and drop</p>
           <div className="flex gap-4">
             <Button
-              type="button"
+              type="button" // Explicitly set type to button
               variant="outline"
               size="lg"
               className="cursor-pointer text-base px-6"

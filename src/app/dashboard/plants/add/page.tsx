@@ -108,9 +108,9 @@ export default function AddPlantPage() {
               <h1 className="text-3xl font-bold mb-8 text-center">Add New Plant</h1>
 
               <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="grid md:grid-cols-2 gap-8">
-                  {/* Left column - Image Upload */}
-                  <div className="flex items-center justify-center">
+                <div className="grid md:grid-cols-5 gap-8">
+                  {/* Left column - Image Upload (3/5 width) */}
+                  <div className="md:col-span-3 flex items-center justify-center">
                     {userId && (
                       <PlantImageWrapper
                         userId={userId}
@@ -120,31 +120,31 @@ export default function AddPlantPage() {
                     )}
                   </div>
 
-                  {/* Right column - Form fields */}
-                  <div className="space-y-6">
-                    <div className="space-y-3">
+                  {/* Right column - Form fields (2/5 width) */}
+                  <div className="md:col-span-2 space-y-5">
+                    <div className="space-y-2">
                       <Label htmlFor="name" className="text-lg">Plant Name *</Label>
                       <Input
                         id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="e.g. My Monstera"
-                        className="h-12 text-lg"
+                        className="h-10 text-base"
                       />
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       <Label htmlFor="location" className="text-lg">Location</Label>
                       <Input
                         id="location"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
                         placeholder="e.g. Living Room"
-                        className="h-12 text-lg"
+                        className="h-10 text-base"
                       />
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       <Label htmlFor="acquired_date" className="flex items-center gap-1 text-lg">
                         <Calendar className="h-5 w-5" />
                         Acquired Date
@@ -154,36 +154,36 @@ export default function AddPlantPage() {
                         value={acquiredDate}
                         onChange={(e) => setAcquiredDate(e.target.value)}
                         type="date"
-                        className="h-12 text-lg"
+                        className="h-10 text-base"
                       />
                     </div>
-                    
-                    {/* Action Buttons */}
-                    <div className="pt-6 flex gap-4">
-                      <Button 
-                        type="button" 
-                        variant="outline"
-                        onClick={() => router.push("/dashboard/plants")}
-                        className="flex-1 h-12 text-lg"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        type="submit"
-                        className="bg-green-600 hover:bg-green-700 flex-1 h-12 text-lg"
-                        disabled={loading}
-                      >
-                        {loading ? (
-                          "Adding..."
-                        ) : (
-                          <>
-                            <Leaf className="w-5 h-5 mr-2" />
-                            Add Plant
-                          </>
-                        )}
-                      </Button>
-                    </div>
                   </div>
+                </div>
+                
+                {/* Action Buttons - Centered at the bottom */}
+                <div className="pt-6 flex justify-center gap-4 mt-8">
+                  <Button 
+                    type="button" 
+                    variant="outline"
+                    onClick={() => router.push("/dashboard/plants")}
+                    className="w-32 h-12 text-lg"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="bg-green-600 hover:bg-green-700 w-32 h-12 text-lg"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      "Adding..."
+                    ) : (
+                      <>
+                        <Leaf className="w-5 h-5 mr-2" />
+                        Add Plant
+                      </>
+                    )}
+                  </Button>
                 </div>
               </form>
             </div>
