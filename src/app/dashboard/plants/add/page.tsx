@@ -22,7 +22,7 @@ export default function AddPlantPage() {
   const router = useRouter();
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>("https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&q=80");
+  const [imageUrl, setImageUrl] = useState<string>("https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?w=800&auto=format&fit=crop&q=80");
   const [userId, setUserId] = useState<string | null>(null);
 
   // Form state

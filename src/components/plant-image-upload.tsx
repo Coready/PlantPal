@@ -185,7 +185,7 @@ export default function PlantImageUpload({
               type="button"
               variant="outline"
               size="sm"
-              className="text-xs bg-white hover:bg-green-50"
+              className="text-xs bg-transparent text-white border-white hover:bg-white/20 hover:text-white"
               onClick={(e) => {
                 e.stopPropagation();
                 triggerFileInput(e);
