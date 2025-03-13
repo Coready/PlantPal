@@ -92,76 +92,13 @@ export default function AddPlantPage() {
       <DashboardNavbar />
       <main className="w-full bg-gray-50 min-h-screen">
         <div className="container mx-auto px-4 py-8">
-          <div className="max-w-2xl mx-auto bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
-            <div className="p-6">
-              <h1 className="text-2xl font-bold mb-6 text-center">Add New Plant</h1>
+          <div className="max-w-4xl mx-auto bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <div className="p-8">
+              <h1 className="text-3xl font-bold mb-8 text-center">Add New Plant</h1>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Left column - Form fields */}
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Plant Name *</Label>
-                      <Input
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="e.g. My Monstera"
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="location">Location</Label>
-                      <Input
-                        id="location"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        placeholder="e.g. Living Room"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="acquired_date" className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        Acquired Date
-                      </Label>
-                      <Input
-                        id="acquired_date"
-                        value={acquiredDate}
-                        onChange={(e) => setAcquiredDate(e.target.value)}
-                        type="date"
-                      />
-                    </div>
-                    
-                    {/* Action Buttons - Moved up */}
-                    <div className="pt-4 flex gap-3">
-                      <Button 
-                        type="button" 
-                        variant="outline"
-                        onClick={() => router.push("/dashboard/plants")}
-                        className="flex-1"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        type="submit"
-                        className="bg-green-600 hover:bg-green-700 flex-1"
-                        disabled={loading}
-                      >
-                        {loading ? (
-                          "Adding..."
-                        ) : (
-                          <>
-                            <Leaf className="w-4 h-4 mr-2" />
-                            Add Plant
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* Right column - Image Upload */}
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Left column - Image Upload */}
                   <div className="flex items-center justify-center">
                     {userId && (
                       <PlantImageWrapper
@@ -170,6 +107,72 @@ export default function AddPlantPage() {
                         initialImageUrl={imageUrl}
                       />
                     )}
+                  </div>
+
+                  {/* Right column - Form fields */}
+                  <div className="space-y-6">
+                    <div className="space-y-3">
+                      <Label htmlFor="name" className="text-lg">Plant Name *</Label>
+                      <Input
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="e.g. My Monstera"
+                        required
+                        className="h-12 text-lg"
+                      />
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label htmlFor="location" className="text-lg">Location</Label>
+                      <Input
+                        id="location"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        placeholder="e.g. Living Room"
+                        className="h-12 text-lg"
+                      />
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label htmlFor="acquired_date" className="flex items-center gap-1 text-lg">
+                        <Calendar className="h-5 w-5" />
+                        Acquired Date
+                      </Label>
+                      <Input
+                        id="acquired_date"
+                        value={acquiredDate}
+                        onChange={(e) => setAcquiredDate(e.target.value)}
+                        type="date"
+                        className="h-12 text-lg"
+                      />
+                    </div>
+                    
+                    {/* Action Buttons */}
+                    <div className="pt-6 flex gap-4">
+                      <Button 
+                        type="button" 
+                        variant="outline"
+                        onClick={() => router.push("/dashboard/plants")}
+                        className="flex-1 h-12 text-lg"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        type="submit"
+                        className="bg-green-600 hover:bg-green-700 flex-1 h-12 text-lg"
+                        disabled={loading}
+                      >
+                        {loading ? (
+                          "Adding..."
+                        ) : (
+                          <>
+                            <Leaf className="w-5 h-5 mr-2" />
+                            Add Plant
+                          </>
+                        )}
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </form>
