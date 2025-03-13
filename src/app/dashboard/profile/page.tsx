@@ -6,7 +6,7 @@ import Link from "next/link";
 import { signOutAction } from "@/app/actions";
 import DashboardNavbar from "@/components/dashboard-navbar";
 import { Mail, Calendar } from "lucide-react";
-import ProfileAvatarUpload from "@/components/profile-avatar-upload";
+import ProfileAvatarWrapper from "@/components/profile-avatar-wrapper";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -37,7 +37,7 @@ export default async function ProfilePage() {
             <Card className="shadow-sm">
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-4">
-                  <ProfileAvatarUpload 
+                  <ProfileAvatarWrapper 
                     userId={user.id} 
                     avatarUrl={profile?.avatar_url} 
                     size="lg"
