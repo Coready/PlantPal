@@ -90,9 +90,12 @@ export default function DashboardNavbar() {
           <Button
             variant="default"
             className="bg-green-600 hover:bg-green-700 ml-2 flex items-center gap-2"
+            asChild
           >
-            <Plus className="h-4 w-4" />
-            Add Plant
+            <Link href="/dashboard/plants/add">
+              <Plus className="h-4 w-4" />
+              Add Plant
+            </Link>
           </Button>
         </div>
         <div className="flex gap-4 items-center">
