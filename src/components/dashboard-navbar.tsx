@@ -9,12 +9,42 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { UserCircle, Home, Leaf, Plus, Calendar, Settings } from "lucide-react";
+import { Home, Leaf, Plus, Calendar, Settings } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import ProfileAvatarUpload from "./profile-avatar-upload";
 
 export default function DashboardNavbar() {
   const supabase = createClient();
   const router = useRouter();
+  const [userId, setUserId] = useState<string | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function getUserProfile() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          setUserId(user.id);
+          
+          const { data: profile } = await supabase
+            .from("users")
+            .select("avatar_url")
+            .eq("id", user.id)
+            .single();
+          
+          if (profile) {
+            setAvatarUrl(profile.avatar_url);
+          }
+        }
+      } catch (error) {
+        console.error("Error loading user profile:", error);
+      }
+    }
+    
+    getUserProfile();
+  }, [supabase]);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -68,8 +98,17 @@ export default function DashboardNavbar() {
         <div className="flex gap-4 items-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <UserCircle className="h-6 w-6" />
+              <Button variant="ghost" size="icon" className="rounded-full h-9 w-9 p-0">
+                {userId ? (
+                  <ProfileAvatarUpload 
+                    userId={userId} 
+                    avatarUrl={avatarUrl} 
+                    size="sm" 
+                    editable={false}
+                  />
+                ) : (
+                  <div className="h-8 w-8 rounded-full bg-green-100" />
+                )}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

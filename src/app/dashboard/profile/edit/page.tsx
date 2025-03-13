@@ -12,12 +12,15 @@ import Link from "next/link";
 import DashboardNavbar from "@/components/dashboard-navbar";
 import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
+import ProfileAvatarUpload from "@/components/profile-avatar-upload";
 
 export default function EditProfilePage() {
   const router = useRouter();
   const supabase = createClient();
   const [fullName, setFullName] = useState("");
   const [bio, setBio] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   
@@ -31,6 +34,8 @@ export default function EditProfilePage() {
           return;
         }
         
+        setUserId(user.id);
+        
         const { data: profile } = await supabase
           .from("users")
           .select("*")
@@ -40,6 +45,7 @@ export default function EditProfilePage() {
         if (profile) {
           setFullName(profile.full_name || "");
           setBio(profile.bio || "");
+          setAvatarUrl(profile.avatar_url || null);
         }
       } catch (error) {
         console.error("Error loading profile:", error);
@@ -50,6 +56,10 @@ export default function EditProfilePage() {
     
     loadUserProfile();
   }, [supabase, router]);
+  
+  const handleAvatarChange = (url: string) => {
+    setAvatarUrl(url);
+  };
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,6 +78,7 @@ export default function EditProfilePage() {
         .update({ 
           full_name: fullName,
           bio: bio,
+          avatar_url: avatarUrl,
           updated_at: new Date().toISOString()
         })
         .eq("id", user.id);
@@ -127,6 +138,17 @@ export default function EditProfilePage() {
               
               <form onSubmit={handleSubmit}>
                 <CardContent className="space-y-4">
+                  <div className="flex justify-center mb-6">
+                    {userId && (
+                      <ProfileAvatarUpload 
+                        userId={userId} 
+                        avatarUrl={avatarUrl} 
+                        onAvatarChange={handleAvatarChange}
+                        size="lg"
+                      />
+                    )}
+                  </div>
+                  
                   <div className="space-y-2">
                     <Label htmlFor="fullName">Name</Label>
                     <Input 

@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import Link from "next/link";
 import { signOutAction } from "@/app/actions";
 import DashboardNavbar from "@/components/dashboard-navbar";
-import { UserCircle, Mail, Calendar } from "lucide-react";
+import { Mail, Calendar } from "lucide-react";
+import ProfileAvatarUpload from "@/components/profile-avatar-upload";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -36,9 +37,12 @@ export default async function ProfilePage() {
             <Card className="shadow-sm">
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-4">
-                  <div className="bg-green-100 p-4 rounded-full">
-                    <UserCircle className="h-12 w-12 text-green-600" />
-                  </div>
+                  <ProfileAvatarUpload 
+                    userId={user.id} 
+                    avatarUrl={profile?.avatar_url} 
+                    size="lg"
+                    editable={true}
+                  />
                   <div>
                     <CardTitle className="text-2xl">{profile?.full_name || "Plant Lover"}</CardTitle>
                     <CardDescription>Member since {new Date(user.created_at).toLocaleDateString()}</CardDescription>
