@@ -118,7 +118,7 @@ export default function AddPlantPage() {
             <div className="p-10">
               <h1 className="text-4xl font-bold mb-10 text-center">Add New Plant</h1>
 
-              <form onSubmit={handleSubmit} className="space-y-8">
+              <form onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-5 gap-10">
                   {/* Left column - Image Upload (3/5 width) */}
                   <div className="md:col-span-3 flex flex-col items-center">
@@ -132,105 +132,107 @@ export default function AddPlantPage() {
                     )}
                   </div>
 
-                  {/* Right column - Form fields (2/5 width) */}
-                  <div className="md:col-span-2 space-y-6">
-                    <div className="space-y-3">
-                      <Label htmlFor="name" className="text-xl">Plant Name</Label>
-                      <Input
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="e.g. My Monstera"
-                        className="h-12 text-lg"
-                      />
-                    </div>
+                  {/* Right column - Form fields (2/5 width) with flex to distribute space */}
+                  <div className="md:col-span-2 flex flex-col h-full">
+                    <div className="flex-grow space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="name" className="text-xl">Plant Name</Label>
+                        <Input
+                          id="name"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="e.g. My Monstera"
+                          className="h-12 text-lg"
+                        />
+                      </div>
 
-                    <div className="space-y-3">
-                      <Label htmlFor="location" className="text-xl">Room</Label>
-                      <Input
-                        id="location"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        placeholder="e.g. Living Room"
-                        className="h-12 text-lg"
-                      />
-                    </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="location" className="text-xl">Room</Label>
+                        <Input
+                          id="location"
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
+                          placeholder="e.g. Living Room"
+                          className="h-12 text-lg"
+                        />
+                      </div>
 
-                    <div className="space-y-3">
-                      <Label htmlFor="light-direction" className="flex items-center gap-2 text-xl">
-                        <Compass className="h-5 w-5" />
-                        Light Direction
-                      </Label>
-                      <Select value={lightDirection} onValueChange={setLightDirection}>
-                        <SelectTrigger className="h-12 text-lg">
-                          <SelectValue placeholder="Select direction" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="north">North</SelectItem>
-                          <SelectItem value="east">East</SelectItem>
-                          <SelectItem value="south">South</SelectItem>
-                          <SelectItem value="west">West</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="light-direction" className="flex items-center gap-2 text-xl">
+                          <Compass className="h-5 w-5" />
+                          Light Direction
+                        </Label>
+                        <Select value={lightDirection} onValueChange={setLightDirection}>
+                          <SelectTrigger className="h-12 text-lg">
+                            <SelectValue placeholder="Select direction" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="north">North</SelectItem>
+                            <SelectItem value="east">East</SelectItem>
+                            <SelectItem value="south">South</SelectItem>
+                            <SelectItem value="west">West</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <div className="space-y-3">
-                      <Label htmlFor="light-brightness" className="flex items-center gap-2 text-xl">
-                        <Sun className="h-5 w-5" />
-                        Light Brightness
-                      </Label>
-                      <Select value={lightBrightness} onValueChange={setLightBrightness}>
-                        <SelectTrigger className="h-12 text-lg">
-                          <SelectValue placeholder="Select brightness" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="low">Low Light</SelectItem>
-                          <SelectItem value="medium">Medium Light</SelectItem>
-                          <SelectItem value="bright">Bright Light</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="light-brightness" className="flex items-center gap-2 text-xl">
+                          <Sun className="h-5 w-5" />
+                          Light Brightness
+                        </Label>
+                        <Select value={lightBrightness} onValueChange={setLightBrightness}>
+                          <SelectTrigger className="h-12 text-lg">
+                            <SelectValue placeholder="Select brightness" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="low">Low Light</SelectItem>
+                            <SelectItem value="medium">Medium Light</SelectItem>
+                            <SelectItem value="bright">Bright Light</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <div className="space-y-3">
-                      <Label htmlFor="acquired_date" className="flex items-center gap-2 text-xl">
-                        <Calendar className="h-5 w-5" />
-                        Acquired Date
-                      </Label>
-                      <Input
-                        id="acquired_date"
-                        value={acquiredDate}
-                        onChange={(e) => setAcquiredDate(e.target.value)}
-                        type="date"
-                        className="h-12 text-lg"
-                      />
+                      <div className="space-y-2">
+                        <Label htmlFor="acquired_date" className="flex items-center gap-2 text-xl">
+                          <Calendar className="h-5 w-5" />
+                          Acquired Date
+                        </Label>
+                        <Input
+                          id="acquired_date"
+                          value={acquiredDate}
+                          onChange={(e) => setAcquiredDate(e.target.value)}
+                          type="date"
+                          className="h-12 text-lg"
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Action Buttons - Right aligned at the bottom */}
+                    <div className="flex justify-end gap-4 mt-4">
+                      <Button 
+                        type="button" 
+                        variant="outline"
+                        onClick={() => router.push("/dashboard/plants")}
+                        className="min-w-40 h-14 text-xl"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        type="submit"
+                        className="bg-green-600 hover:bg-green-700 min-w-40 h-14 text-xl"
+                        disabled={loading}
+                      >
+                        {loading ? (
+                          "Adding..."
+                        ) : (
+                          <>
+                            <Leaf className="w-6 h-6 mr-2" />
+                            Add Plant
+                          </>
+                        )}
+                      </Button>
                     </div>
                   </div>
-                </div>
-                
-                {/* Action Buttons - Right aligned at the bottom */}
-                <div className="pt-8 flex justify-end gap-4 mt-8">
-                  <Button 
-                    type="button" 
-                    variant="outline"
-                    onClick={() => router.push("/dashboard/plants")}
-                    className="min-w-40 h-14 text-xl"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    className="bg-green-600 hover:bg-green-700 min-w-40 h-14 text-xl"
-                    disabled={loading}
-                  >
-                    {loading ? (
-                      "Adding..."
-                    ) : (
-                      <>
-                        <Leaf className="w-6 h-6 mr-2" />
-                        Add Plant
-                      </>
-                    )}
-                  </Button>
                 </div>
               </form>
             </div>
