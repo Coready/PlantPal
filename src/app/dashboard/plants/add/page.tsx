@@ -116,12 +116,12 @@ export default function AddPlantPage() {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-5xl mx-auto bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
             <div className="p-8">
-              <h1 className="text-3xl font-bold mb-6 text-center text-green-800">Add Your Green Friend</h1>
-              <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">Document your plants and track their growth journey. Each plant tells a story - start capturing yours today.</p>
+              <h1 className="text-3xl font-bold mb-4 text-center text-green-800">Add Your Green Friend</h1>
+              <p className="text-center text-gray-600 mb-6 max-w-2xl mx-auto">Document your plants and track their growth journey. Each plant tells a story - start capturing yours today.</p>
 
               <form onSubmit={handleSubmit}>
-                <div className="grid md:grid-cols-5 gap-8">
-                  <div className="md:col-span-5 mb-2">
+                <div className="grid md:grid-cols-5 gap-5">
+                  <div className="md:col-span-5 mb-0">
                     <div className="grid md:grid-cols-5 gap-6 items-start">
                       {/* Left column - Image Upload (3/5 width) */}
                       <div className="md:col-span-3">
@@ -136,8 +136,8 @@ export default function AddPlantPage() {
                       </div>
 
                       {/* Right column - Form fields (2/5 width) */}
-                      <div className="md:col-span-2">
-                        <div className="space-y-5">
+                      <div className="md:col-span-2 flex flex-col h-[28rem] justify-between">
+                        <div className="space-y-4">
                           <div>
                             <Label htmlFor="name" className="text-base font-medium text-green-800">Plant Name</Label>
                             <Input
@@ -209,34 +209,34 @@ export default function AddPlantPage() {
                             />
                           </div>
                         </div>
+                        
+                        {/* Action Buttons - at the bottom of the right column */}
+                        <div className="flex justify-end gap-3 mt-4 mb-1">
+                          <Button 
+                            type="button" 
+                            variant="outline"
+                            onClick={() => router.push("/dashboard/plants")}
+                            className="min-w-28 h-10 text-sm border-green-200 text-green-800 hover:bg-green-50"
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            type="submit"
+                            className="bg-green-600 hover:bg-green-700 min-w-28 h-10 text-sm"
+                            disabled={loading}
+                          >
+                            {loading ? (
+                              "Adding..."
+                            ) : (
+                              <>
+                                <Leaf className="w-4 h-4 mr-2" />
+                                Add Plant
+                              </>
+                            )}
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  
-                  {/* Action Buttons - Centered at the bottom */}
-                  <div className="md:col-span-5 flex justify-center gap-4 mt-6">
-                    <Button 
-                      type="button" 
-                      variant="outline"
-                      onClick={() => router.push("/dashboard/plants")}
-                      className="min-w-28 h-10 text-sm border-green-200 text-green-800 hover:bg-green-50"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      type="submit"
-                      className="bg-green-600 hover:bg-green-700 min-w-28 h-10 text-sm"
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        "Adding..."
-                      ) : (
-                        <>
-                          <Leaf className="w-4 h-4 mr-2" />
-                          Add Plant
-                        </>
-                      )}
-                    </Button>
                   </div>
                 </div>
               </form>
